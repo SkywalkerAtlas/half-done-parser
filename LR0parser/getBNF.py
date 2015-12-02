@@ -12,7 +12,7 @@ def getBNF(file_name):
     with open(path.join(here, 'grammer',file_name)) as f:
         begin_production_left = f.readline().strip().split('->')[0]
         if not begin_production_left.endswith('\''):
-            grammer_productions_list.append(begin_production_left+'->'+begin_production_left+'\'')
+            grammer_productions_list.append(begin_production_left+'\''+'->'+begin_production_left)
         f.seek(0)
         for eachLine in f:
             same_leftPart_strip_list = eachLine.strip().split('|')
