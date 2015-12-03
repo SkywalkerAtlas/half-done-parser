@@ -5,7 +5,7 @@ half-done-parser
 ****
 ###　　　　　　　　　 Author:曹汀(1030413212)
 ###　　　　　　　　　 E-mail:625741735@qq.com
-###　　　　　　　　　 Also see at:https://github.com/SkywalkerAtlas/half-done-parser.git
+###　　　　　　　　　 See also:https://github.com/SkywalkerAtlas/half-done-parser.git
 
 ==============================
 
