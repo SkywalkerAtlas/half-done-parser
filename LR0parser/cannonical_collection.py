@@ -7,7 +7,7 @@ import itertools
 from ItemCollection import getItemCollection
 from grammer_symbol import get_grammer_symbol
 
-DFA = []
+DFA = {}
 
 def getClouse(item_sets,grammer_productions_list):
 	item_cloused = []
@@ -31,8 +31,11 @@ def GOTO(I,X,grammer_productions_list):
 	# print I,X
 	item_sets = []
 	for eachItem in I[1]:
-		# print eachItem
-		pattern = '`[' + str(X)+']'
+		if len(X)>1:
+			pattern = '`['+str(X[0])+']'+'['+str(X[1])+']'
+		else:
+			# print eachItem
+			pattern = '`[' + str(X)+']'
 		m = re.search(pattern, eachItem)
 		if m is not None:
 			moved_item = move_dot(eachItem)
@@ -44,6 +47,12 @@ def GOTO(I,X,grammer_productions_list):
 		return None
 	else:
 		return item_sets
+
+def add_to_DFA(I_n,symbol,J_n):
+	if DFA.has_key(I_n):
+		DFA[I_n].append('--'+symbol+'->'+J_n)
+	else:
+		DFA[I_n] = ['--'+symbol+'->'+J_n,]
 
 def get_cannonical_collection(items_list,grammer_productions_list):
 	C_dict = {}
@@ -57,17 +66,38 @@ def get_cannonical_collection(items_list,grammer_productions_list):
 		for each_I,items_in_each_I in C_dict.items():
 			# print each_I,items_in_each_I
 			for each_grammer_symbol in gram_symbol:
+				# each_grammer_symbol = each_grammer_symbol[0]
 				generated_item = GOTO((each_I,items_in_each_I),each_grammer_symbol,grammer_productions_list)
 				if generated_item is not None and generated_item not in C_dict.values():
 					item_sets_n_count = item_sets_n_count + 1
 					C_dict['I_'+str(item_sets_n_count)] = generated_item
+					add_to_DFA(each_I,each_grammer_symbol,'I_'+str(item_sets_n_count))
 					flag = 1
+				elif generated_item is not None:
+					J_n = ''
+					for each_i in C_dict:
+						if C_dict[each_i] == generated_item:
+							J_n = each_i
+							break
+					in_flag = 0
+					if DFA.has_key(each_I):
+						for eachiii in DFA[each_I]:
+							if eachiii.find(J_n) != -1:
+								in_flag = 1
+								break
+					if in_flag == 0:
+						add_to_DFA(each_I,each_grammer_symbol,J_n)
 		if flag == 0:
 			break
 	return C_dict
 
 if __name__ == '__main__':
-	items_list,grammer_productions_list = getItemCollection("grammer.txt")
+	items_list,grammer_productions_list = getItemCollection("grammer2.txt")
 	gram_symbol = get_grammer_symbol(grammer_productions_list)
 	C_dict = get_cannonical_collection(items_list,grammer_productions_list)
 	print C_dict
+	# print DFA
+	for each,item in C_dict.items():
+		print (each,item)
+	for each,item in DFA.items():
+		print each,item
