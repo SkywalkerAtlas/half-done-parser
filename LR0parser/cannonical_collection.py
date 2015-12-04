@@ -28,7 +28,7 @@ def move_dot(st):
 	return new_st
 
 def GOTO(I,X,grammer_productions_list):
-	print I,X
+	# print I,X
 	item_sets = []
 	for eachItem in I[1]:
 		# print eachItem
@@ -52,14 +52,18 @@ def get_cannonical_collection(items_list,grammer_productions_list):
 	item_sets_list.append(items_list[0])
 	item_sets_list = getClouse(item_sets_list,grammer_productions_list)
 	C_dict['I_'+str(item_sets_n_count)] = item_sets_list
-	for each_I,items_in_each_I in itertools.repeat(C_dict.items(), 10):
-		# print each_I,items_in_each_I
-		for each_grammer_symbol in gram_symbol:
-			generated_item = GOTO((each_I,items_in_each_I),each_grammer_symbol,grammer_productions_list)
-			if generated_item is not None and generated_item not in C_dict.values():
-				item_sets_n_count = item_sets_n_count + 1
-				C_dict['I_'+str(item_sets_n_count)] = generated_item
-				print C_dict
+	while True:
+		flag = 0
+		for each_I,items_in_each_I in C_dict.items():
+			# print each_I,items_in_each_I
+			for each_grammer_symbol in gram_symbol:
+				generated_item = GOTO((each_I,items_in_each_I),each_grammer_symbol,grammer_productions_list)
+				if generated_item is not None and generated_item not in C_dict.values():
+					item_sets_n_count = item_sets_n_count + 1
+					C_dict['I_'+str(item_sets_n_count)] = generated_item
+					flag = 1
+		if flag == 0:
+			break
 	return C_dict
 
 if __name__ == '__main__':
