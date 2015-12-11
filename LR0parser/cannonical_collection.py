@@ -92,7 +92,7 @@ def get_cannonical_collection(items_list,grammer_productions_list):
 	return C_dict
 
 if __name__ == '__main__':
-	items_list,grammer_productions_list = getItemCollection("grammer2.txt")
+	items_list,grammer_productions_list = getItemCollection("grammer.txt")
 	gram_symbol = get_grammer_symbol(grammer_productions_list)
 	C_dict = get_cannonical_collection(items_list,grammer_productions_list)
 	print C_dict

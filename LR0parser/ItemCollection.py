@@ -22,4 +22,5 @@ def getItemCollection(file_name):
 
 if __name__ == '__main__':
     output = getItemCollection('grammer.txt')
-    print output
+    print output[0]
+    print output[1]
