@@ -19,8 +19,10 @@ def get_follow_set(X,production_dist,terminals_list,non_terminals_list,follow,fi
 
 	for key in production_dist.keys():
 		for each_pro in production_dist[key]:
-			if each_pro.find(X) != -1 and key != X:
-				if each_pro.endswith(X):
+			if each_pro.find(X) != -1:
+				if each_pro.endswith(X) and key == X:
+					continue
+				elif each_pro.endswith(X):
 					follow_set = follow_set | (get_follow_set(key,production_dist,terminals_list,non_terminals_list,follow,first))
 
 				else:
@@ -61,5 +63,5 @@ def get_follow(file_name):
 	return follow
 
 if __name__ == '__main__':
-	output = get_follow('grammer2.txt')
+	output = get_follow('grammer.txt')
 	print output

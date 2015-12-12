@@ -54,7 +54,7 @@ def add_to_DFA(I_n,symbol,J_n):
 	else:
 		DFA[I_n] = ['--'+symbol+'->'+J_n,]
 
-def get_cannonical_collection(items_list,grammer_productions_list):
+def get_cannonical_collection(items_list,grammer_productions_list,gram_symbol):
 	C_dict = {}
 	item_sets_n_count = 0
 	item_sets_list = []
@@ -94,8 +94,7 @@ def get_cannonical_collection(items_list,grammer_productions_list):
 if __name__ == '__main__':
 	items_list,grammer_productions_list = getItemCollection("grammer.txt")
 	gram_symbol = get_grammer_symbol(grammer_productions_list)
-	C_dict = get_cannonical_collection(items_list,grammer_productions_list)
-	print C_dict
+	C_dict = get_cannonical_collection(items_list,grammer_productions_list,gram_symbol)
 	# print DFA
 	for each,item in C_dict.items():
 		print (each,item)
