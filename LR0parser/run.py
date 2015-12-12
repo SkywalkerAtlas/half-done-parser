@@ -45,7 +45,7 @@ if __name__ == '__main__':
 	attributes = ['status']
 	terminals_list.append('#')
 	attributes.extend(terminals_list)
-	non_terminals_list.remove('E\'')
+	non_terminals_list.pop(0)
 	attributes.extend(non_terminals_list)
 	table = pylsytable(attributes)
 	table.add_data('status', SLR1_tabel.keys())
